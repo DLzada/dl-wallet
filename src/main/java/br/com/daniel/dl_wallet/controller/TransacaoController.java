@@ -5,7 +5,7 @@ import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.service.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.mapping.List;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
