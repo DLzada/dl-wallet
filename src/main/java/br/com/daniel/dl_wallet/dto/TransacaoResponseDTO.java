@@ -14,5 +14,5 @@ public class TransacaoResponseDTO {
     private BigDecimal valor;
     private LocalDate data;
     private TipoTransacao tipo;
-    private String nomeUsuario; // Apenas o nome, sem o objeto inteiro
+    private String nomeUsuario;
 }
