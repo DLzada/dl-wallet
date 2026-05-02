@@ -1,4 +1,4 @@
-package br.com.daniel.dl_wallet.model;
+package br.com.daniel.dl_wallet.database.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Usuario {
+public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
