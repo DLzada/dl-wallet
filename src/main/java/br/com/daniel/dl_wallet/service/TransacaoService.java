@@ -5,10 +5,12 @@ import br.com.daniel.dl_wallet.database.model.UsuarioEntity;
 import br.com.daniel.dl_wallet.database.repository.ITransacaoRepository;
 import br.com.daniel.dl_wallet.database.repository.IUsuarioRepository;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
+import br.com.daniel.dl_wallet.enums.TipoTransacao;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,5 +38,14 @@ public class TransacaoService {
 
     public List<TransacaoEntity> listarPorUsuario(Long usuarioId){
         return transacaoRepository.findAllByUsuarioId(usuarioId);
+    }
+
+    public BigDecimal calcularSaldo(Long usuarioId){
+        List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
+
+        return transacoes.stream()
+                .map(t-> t.getTipo() == TipoTransacao.ENTRADA ? t.getValor() : t.getValor().negate())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
     }
 }
