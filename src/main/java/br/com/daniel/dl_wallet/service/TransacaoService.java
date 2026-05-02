@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,9 @@ public class TransacaoService {
                 .build();
 
         return transacaoRepository.save(transacao);
+    }
+
+    public List<TransacaoEntity> listarPorUsuario(Long usuarioId){
+        return transacaoRepository.findAllByUsuarioId(usuarioId);
     }
 }
