@@ -3,6 +3,7 @@ package br.com.daniel.dl_wallet.database.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,5 +25,5 @@ public class UsuarioEntity {
     private String email;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<TransacaoEntity> transacoes;
+    private List<TransacaoEntity> transacoes = new ArrayList<>();
 }
