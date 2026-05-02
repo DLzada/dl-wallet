@@ -5,6 +5,7 @@ import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.service.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,12 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.CREATED)
     public TransacaoEntity criar(@Valid @RequestBody TransacaoRequestDTO dto){
         return transacaoService.salvar(dto);
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TransacaoEntity> listarPorUsuario(@PathVariable Long usuarioId){
+        return transacaoService.listarPorUsuario(usuarioId);
     }
 
     @GetMapping("/saldo/{usuarioId}")
