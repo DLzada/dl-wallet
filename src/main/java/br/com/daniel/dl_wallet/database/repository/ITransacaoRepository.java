@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ITransacaoRepository extends JpaRepository<TransacaoEntity, Long> {
-    List<TransacaoEntity> findAllByUsuarioId(Long usuarioId);
+    List<TransacaoEntity> findAllByUsuarioId(Long usuarioId );
 }
