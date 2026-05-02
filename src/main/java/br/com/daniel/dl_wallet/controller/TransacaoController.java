@@ -23,9 +23,9 @@ public class TransacaoController {
         return transacaoService.salvar(dto);
     }
 
-    @GetMapping
+    @GetMapping("/saldo/{usuarioId}")
     @ResponseStatus(HttpStatus.OK)
-    public BigDecimal getSaldo(@PathVariable Long usuarioId){
+    public BigDecimal buscarSaldo(@PathVariable Long usuarioId){
         return transacaoService.calcularSaldo(usuarioId);
     }
 }
