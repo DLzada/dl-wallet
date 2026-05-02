@@ -1,6 +1,7 @@
 package br.com.daniel.dl_wallet.database.model;
 
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,6 +35,7 @@ public class TransacaoEntity {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnore
     private UsuarioEntity usuario;
 
 }
