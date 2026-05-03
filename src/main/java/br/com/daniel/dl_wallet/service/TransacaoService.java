@@ -126,12 +126,12 @@ public class TransacaoService {
         }
 
         return ResumoFinanceiroDTO.builder()
-                .entradas(converteParaLista(somaEntradas))
-                .saidas(converteParaLista(somaSaidas))
+                .entradas(converterParaLista(somaEntradas))
+                .saidas(converterParaLista(somaSaidas))
                 .build();
     }
 
-    public List<CategoriaValorDTO> converteParaLista(Map<String, BigDecimal> mapa){
+    public List<CategoriaValorDTO> converterParaLista(Map<String, BigDecimal> mapa){
         List<CategoriaValorDTO> lista = new ArrayList<>();
 
         for(Map.Entry<String, BigDecimal> entry: mapa.entrySet()){
