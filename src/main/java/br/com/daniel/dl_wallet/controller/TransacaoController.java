@@ -3,6 +3,7 @@ package br.com.daniel.dl_wallet.controller;
 import br.com.daniel.dl_wallet.database.model.TransacaoEntity;
 import br.com.daniel.dl_wallet.dto.ExtratoResponseDTO;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
+import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.service.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,5 +57,11 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.OK)
     public ExtratoResponseDTO buscarExtratoCompleto(@PathVariable Long usuarioId){
         return transacaoService.buscarExtratoCompleto(usuarioId);
+    }
+
+    @GetMapping("/resumo-categorias/{usuarioId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<CategoriaTransacao, BigDecimal> obterResumoCategorias(@PathVariable Long usuarioId){
+        return transacaoService.obterResumoPorCategoria(usuarioId);
     }
 }

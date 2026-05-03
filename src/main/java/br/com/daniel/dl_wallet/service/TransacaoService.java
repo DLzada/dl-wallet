@@ -113,6 +113,7 @@ public class TransacaoService {
         List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
 
         return transacoes.stream()
+                .filter(t -> t.getCategoria() != null)
                 .collect(Collectors.groupingBy(
                         TransacaoEntity::getCategoria,
                         Collectors.reducing(
