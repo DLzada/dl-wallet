@@ -2,6 +2,7 @@ package br.com.daniel.dl_wallet.controller;
 
 import br.com.daniel.dl_wallet.database.model.TransacaoEntity;
 import br.com.daniel.dl_wallet.dto.ExtratoResponseDTO;
+import br.com.daniel.dl_wallet.dto.ResumoFinanceiroDTO;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.service.TransacaoService;
@@ -61,7 +62,7 @@ public class TransacaoController {
 
     @GetMapping("/resumo-categorias/{usuarioId}")
     @ResponseStatus(HttpStatus.OK)
-    public Map<CategoriaTransacao, BigDecimal> obterResumoCategorias(@PathVariable Long usuarioId){
-        return transacaoService.obterResumoPorCategoria(usuarioId);
+    public ResumoFinanceiroDTO obterResumoCategorias(@PathVariable Long usuarioId){
+        return transacaoService.obterResumoSimples(usuarioId);
     }
 }
