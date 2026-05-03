@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -101,5 +103,23 @@ public class TransacaoService {
                 .transacoes(transacoes)
                 .build();
 
+    }
+
+    public Map<CategoriaTransacao, BigDecimal> obterResumoPorCategoria(Long usuarioId){
+        if(!usuarioRepository.existsById(usuarioId)){
+            throw new RuntimeException("O usuario nao foi encontrado!");
+        }
+
+        List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
+
+        return transacoes.stream()
+                .collect(Collectors.groupingBy(
+                        TransacaoEntity::getCategoria,
+                        Collectors.reducing(
+                                BigDecimal.ZERO,
+                                TransacaoEntity::getValor,
+                                BigDecimal::add
+                        )
+                ));
     }
 }
