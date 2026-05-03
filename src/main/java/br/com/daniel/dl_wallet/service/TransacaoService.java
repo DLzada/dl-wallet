@@ -4,6 +4,7 @@ import br.com.daniel.dl_wallet.database.model.TransacaoEntity;
 import br.com.daniel.dl_wallet.database.model.UsuarioEntity;
 import br.com.daniel.dl_wallet.database.repository.ITransacaoRepository;
 import br.com.daniel.dl_wallet.database.repository.IUsuarioRepository;
+import br.com.daniel.dl_wallet.dto.ExtratoResponseDTO;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,5 +85,21 @@ public class TransacaoService {
         }
 
         return transacaoRepository.findAllByUsuarioIdAndDataBetween(usuarioId, inicio, fim);
+    }
+
+    public ExtratoResponseDTO buscarExtratoCompleto(Long usuarioId){
+        UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(()-> new RuntimeException("Usuario nao encontrado"));
+
+        List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
+
+        BigDecimal saldo = calcularSaldo(usuarioId);
+
+        return ExtratoResponseDTO.builder()
+                .nomeUsuario(usuario.getNome())
+                .saldoAtual(saldo)
+                .transacoes(transacoes)
+                .build();
+
     }
 }
