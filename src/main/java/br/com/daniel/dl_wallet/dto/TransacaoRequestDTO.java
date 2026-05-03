@@ -1,5 +1,6 @@
 package br.com.daniel.dl_wallet.dto;
 
+import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -13,6 +14,9 @@ public class TransacaoRequestDTO {
 
     @NotNull(message = "O valor é obrigatorio")
     private BigDecimal valor;
+
+    @NotNull(message = "A categoria é obrigatória")
+    private CategoriaTransacao categoria;
 
     @NotNull(message = "O tipo da transacao é obrigatorio")
     private TipoTransacao tipoTransacao;

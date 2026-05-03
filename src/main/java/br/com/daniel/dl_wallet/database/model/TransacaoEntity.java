@@ -1,5 +1,6 @@
 package br.com.daniel.dl_wallet.database.model;
 
+import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -28,6 +29,9 @@ public class TransacaoEntity {
 
     @Column(nullable = false)
     private LocalDate data;
+
+    @Enumerated(EnumType.STRING)
+    private CategoriaTransacao categoria;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
