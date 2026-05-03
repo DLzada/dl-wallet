@@ -41,6 +41,11 @@ public class TransacaoService {
     }
 
     public BigDecimal calcularSaldo(Long usuarioId){
+
+        if (!usuarioRepository.existsById(usuarioId)) {
+            throw new RuntimeException("Usuário não encontrado com o ID: " + usuarioId);
+        }
+
         List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
 
         return transacoes.stream()
