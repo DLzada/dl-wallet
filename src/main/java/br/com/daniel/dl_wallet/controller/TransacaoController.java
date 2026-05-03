@@ -1,6 +1,7 @@
 package br.com.daniel.dl_wallet.controller;
 
 import br.com.daniel.dl_wallet.database.model.TransacaoEntity;
+import br.com.daniel.dl_wallet.dto.ExtratoResponseDTO;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.service.TransacaoService;
 import jakarta.validation.Valid;
@@ -48,5 +49,11 @@ public class TransacaoController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim
             ){
         return transacaoService.buscarExtratoPorPeriodo(usuarioId, inicio, fim);
+    }
+
+    @GetMapping("/extrato-completo/{usuarioId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExtratoResponseDTO buscarExtratoCompleto(@PathVariable Long usuarioId){
+        return transacaoService.buscarExtratoCompleto(usuarioId);
     }
 }
