@@ -5,6 +5,7 @@ import br.com.daniel.dl_wallet.database.model.UsuarioEntity;
 import br.com.daniel.dl_wallet.database.repository.ITransacaoRepository;
 import br.com.daniel.dl_wallet.database.repository.IUsuarioRepository;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
+import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,12 @@ public class TransacaoService {
         UsuarioEntity usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
 
+        if (dto.getValor().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("O valor da transação deve ser maior que zero.");
+        }
+
+        validarCategoria(dto);
+
         TransacaoEntity transacao = TransacaoEntity.builder()
                 .descricao(dto.getDescricao())
                 .valor(dto.getValor())
@@ -35,6 +42,18 @@ public class TransacaoService {
                 .build();
 
         return transacaoRepository.save(transacao);
+    }
+
+    private void validarCategoria(TransacaoRequestDTO dto){
+        if(dto.getTipoTransacao() == TipoTransacao.ENTRADA){
+            if(dto.getCategoria() != CategoriaTransacao.SALARIO && dto.getCategoria() != CategoriaTransacao.OUTROS){
+                throw new RuntimeException("Categoria inválida para uma transação de Entrada!");
+            }
+        }else {
+            if (dto.getCategoria() == CategoriaTransacao.SALARIO){
+                throw new RuntimeException("Categoria inválida para um transação de Saida!");
+            }
+        }
     }
 
     public List<TransacaoEntity> listarPorUsuario(Long usuarioId){
