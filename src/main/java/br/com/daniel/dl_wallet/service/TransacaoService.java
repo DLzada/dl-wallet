@@ -4,7 +4,9 @@ import br.com.daniel.dl_wallet.database.model.TransacaoEntity;
 import br.com.daniel.dl_wallet.database.model.UsuarioEntity;
 import br.com.daniel.dl_wallet.database.repository.ITransacaoRepository;
 import br.com.daniel.dl_wallet.database.repository.IUsuarioRepository;
+import br.com.daniel.dl_wallet.dto.CategoriaValorDTO;
 import br.com.daniel.dl_wallet.dto.ExtratoResponseDTO;
+import br.com.daniel.dl_wallet.dto.ResumoFinanceiroDTO;
 import br.com.daniel.dl_wallet.dto.TransacaoRequestDTO;
 import br.com.daniel.dl_wallet.enums.CategoriaTransacao;
 import br.com.daniel.dl_wallet.enums.TipoTransacao;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -105,22 +108,38 @@ public class TransacaoService {
 
     }
 
-    public Map<CategoriaTransacao, BigDecimal> obterResumoPorCategoria(Long usuarioId){
-        if(!usuarioRepository.existsById(usuarioId)){
-            throw new RuntimeException("O usuario nao foi encontrado!");
-        }
-
+    public ResumoFinanceiroDTO obterResumoSimples(Long usuarioId){
         List<TransacaoEntity> transacoes = transacaoRepository.findAllByUsuarioId(usuarioId);
 
-        return transacoes.stream()
-                .filter(t -> t.getCategoria() != null)
-                .collect(Collectors.groupingBy(
-                        TransacaoEntity::getCategoria,
-                        Collectors.reducing(
-                                BigDecimal.ZERO,
-                                TransacaoEntity::getValor,
-                                BigDecimal::add
-                        )
-                ));
+        Map<String, BigDecimal> somaEntradas = new HashMap<>();
+        Map<String, BigDecimal> somaSaidas = new HashMap<>();
+
+        for (TransacaoEntity t : transacoes){
+            String catNome = (t.getCategoria() != null) ? t.getCategoria().name() : "OUTROS";
+            BigDecimal valor = t.getValor();
+
+            if(t.getTipo() == TipoTransacao.ENTRADA){
+                somaEntradas.put(catNome, somaEntradas.getOrDefault(catNome, BigDecimal.ZERO).add(valor));
+            }else {
+                somaSaidas.put(catNome, somaSaidas.getOrDefault(catNome, BigDecimal.ZERO).add(valor));
+            }
+        }
+
+        return ResumoFinanceiroDTO.builder()
+                .entradas(converteParaLista(somaEntradas))
+                .saidas(converteParaLista(somaSaidas))
+                .build();
+    }
+
+    public List<CategoriaValorDTO> converteParaLista(Map<String, BigDecimal> mapa){
+        List<CategoriaValorDTO> lista = new ArrayList<>();
+
+        for(Map.Entry<String, BigDecimal> entry: mapa.entrySet()){
+            lista.add(CategoriaValorDTO.builder()
+                    .categoria(entry.getKey())
+                    .total(entry.getValue())
+                    .build());
+        }
+        return lista;
     }
 }
