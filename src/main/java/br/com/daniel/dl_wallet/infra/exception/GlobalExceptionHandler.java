@@ -7,6 +7,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -21,5 +24,16 @@ public class GlobalExceptionHandler {
         String mensagem = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         ErrorResponse erro = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public List<ErroCampoDTO> handleValidation(MethodArgumentNotValidException ex){
+        List<ErroCampoDTO> erros = new ArrayList<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            erros.add(new ErroCampoDTO(error.getField(), error.getDefaultMessage()));
+        });
+
+        return erros;
     }
 }
