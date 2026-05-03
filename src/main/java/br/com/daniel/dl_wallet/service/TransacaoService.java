@@ -51,6 +51,17 @@ public class TransacaoService {
         return transacoes.stream()
                 .map(t-> t.getTipo() == TipoTransacao.ENTRADA ? t.getValor() : t.getValor().negate())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
+    public List<TransacaoEntity> buscarExtratoPorPeriodo(Long usuarioId, LocalDate inicio, LocalDate fim){
+        if(!usuarioRepository.existsById(usuarioId)){
+            throw new RuntimeException("Usuário nao encontrado");
+        }
+
+        if (inicio.isAfter(fim)) {
+            throw new RuntimeException("A data de início não pode ser maior que a data de fim!");
+        }
+
+        return transacaoRepository.findAllByUsuarioIdAndDataBetween(usuarioId, inicio, fim);
     }
 }
