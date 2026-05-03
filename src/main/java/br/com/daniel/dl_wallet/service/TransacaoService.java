@@ -28,6 +28,7 @@ public class TransacaoService {
         TransacaoEntity transacao = TransacaoEntity.builder()
                 .descricao(dto.getDescricao())
                 .valor(dto.getValor())
+                .categoria(dto.getCategoria())
                 .tipo(dto.getTipoTransacao())
                 .data(LocalDate.now())
                 .usuario(usuario)
