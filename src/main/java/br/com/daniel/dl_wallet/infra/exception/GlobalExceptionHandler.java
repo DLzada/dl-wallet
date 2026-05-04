@@ -3,6 +3,7 @@ package br.com.daniel.dl_wallet.infra.exception;
 import br.com.daniel.dl_wallet.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,6 +40,16 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleTypeMismatch(MethodArgumentTypeMismatchException ex){
         Map<String, String> erro = new HashMap<>();
         erro.put("mensagem", String.format("O parametro '%s' recebeu o valor '%s' que é inválido. Esperado: %s", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
+
+        return erro;
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public Map<String, String> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex){
+        Map<String, String> erro = new HashMap<>();
+
+        erro.put("mensagem", "Este endpoint não suporta o método" + ex.getMethod());
 
         return erro;
     }
