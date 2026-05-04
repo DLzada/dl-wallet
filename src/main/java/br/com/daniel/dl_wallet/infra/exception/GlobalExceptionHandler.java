@@ -53,4 +53,12 @@ public class GlobalExceptionHandler {
 
         return erro;
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleGeneralException(Exception ex){
+        Map<String, String> erro = new HashMap<>();
+        erro.put("mensagem", "Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+        return erro;
+    }
 }
