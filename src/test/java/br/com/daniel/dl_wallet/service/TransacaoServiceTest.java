@@ -15,9 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +31,7 @@ class TransacaoServiceTest {
     private TransacaoService transacaoService;
 
     @Test
-    @DisplayName("Deve salvar uma transação com sucesso!")
+    @DisplayName("Deve   salvar uma transação com sucesso!")
     void salvarSucesso(){
         Long usuarioId = 1L;
 
@@ -59,5 +58,26 @@ class TransacaoServiceTest {
 
         verify(transacaoRepository, times(1)).save(any(TransacaoEntity.class));
         verify(usuarioRepository, times(1)).findById(usuarioId);
+    }
+
+    @Test
+    @DisplayName("Deve lançar exeção quando o usuário não existe")
+    void salvarErroUsuarioNaoEcontrado(){
+        Long usuarioIdInexistente = 99L;
+
+        TransacaoRequestDTO request = new TransacaoRequestDTO();
+        request.setUsuarioId(usuarioIdInexistente);
+        request.setDescricao("Teste Erro");
+        request.setValor(new BigDecimal("50.00"));
+
+        when(usuarioRepository.findById(usuarioIdInexistente)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->{
+            transacaoService.salvar(request);
+        });
+
+        assertEquals("Usuario não encontrado", exception.getMessage());
+
+        verify(transacaoRepository, never()).save(any(TransacaoEntity.class));
     }
 }
