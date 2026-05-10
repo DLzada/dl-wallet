@@ -76,7 +76,7 @@ class TransacaoServiceTest {
             transacaoService.salvar(request);
         });
 
-        assertEquals("Usuario não encontrado", exception.getMessage());
+        assertEquals("Usuario não encontrado!", exception.getMessage());
 
         verify(transacaoRepository, never()).save(any(TransacaoEntity.class));
     }
