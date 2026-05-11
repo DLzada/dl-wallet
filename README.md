@@ -6,7 +6,10 @@ Muitas pessoas perdem o controle de suas finanças por não terem uma forma simp
 
 ---
 ## Arquitetura do Sistema
-O projeto segue uma estrutura de **Monolito Containerizado**, dividida em camadas para facilitar a manutenção e escalabilidade:
+Para garantir a escalabilidade e o isolamento do ambiente, o  projeto segue uma estrutura de **Monolito Containerizado**, dividida em camadas para facilitar a manutenção, o **DL Wallet** foi desenhado para um melhor entendimento conforme o fluxo abaixo:
+<div align="center">
+  <img src="./assets/fluxo-application.png" alt="Arquitetura do Projeto" width="100%">
+</div>
 
 1.  **Client/User**: Interface que consome a API (Postman, Frontend ou Mobile).
 2.  **Controller**: Camada de entrada que gerencia as requisições REST.
@@ -47,7 +50,11 @@ Abaixo estão os principais pontos de acesso da aplicação:
 
 ---
 
-## 🛠️ Como Executar o Projeto
+## Fluxo de Exe
+
+---
+
+## Como Executar o Projeto
 
 Você precisará ter o **Docker Desktop** instalado na sua máquina.
 
