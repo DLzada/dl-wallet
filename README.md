@@ -44,3 +44,27 @@ Abaixo estão os principais pontos de acesso da aplicação:
 | `DELETE` | `/transacoes/{id}` | Remove um registro de transação. |
 
 > **Nota:** Você pode acessar a documentação completa via Swagger em: `http://localhost:8080/swagger-ui/index.html`
+
+---
+
+## 🛠️ Como Executar o Projeto
+
+Você precisará ter o **Docker Desktop** instalado na sua máquina.
+
+1.  **Clone o projeto:**
+    ```bash
+    git clone [https://github.com/DLzada/dl-wallet.git](https://github.com/DLzada/dl-wallet.git)
+    cd dl-wallet
+    ```
+
+2.  **Gere o pacote do Java:**
+    ```bash
+    mvn clean package -DskipTests
+    ```
+
+3.  **Suba os Containers:**
+    ```bash
+    docker compose up --build
+    ```
+
+O Spring Boot iniciará na porta `8080` e o Postgres na porta `5432`.
