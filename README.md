@@ -1,5 +1,15 @@
 # DL Wallet - Gerenciador Financeiro Pessoal
 
+<div align="center">
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23C1E11E?style=for-the-badge&logo=swagger&logoColor=black)
+
+</div>
+
 ##  Visão Geral - O Problema Real
 
 Muitas pessoas perdem o controle de suas finanças por não terem uma forma simples e centralizada de registrar entradas e saídas. O **DL Wallet** resolve o problema da falta de visibilidade financeira, permitindo que o usuário tenha um histórico claro de suas transações e, futuramente, uma visão consolidada de seu saldo acumulado.
@@ -47,10 +57,6 @@ Abaixo estão os principais pontos de acesso da aplicação:
 | `DELETE` | `/transacoes/{id}` | Remove um registro de transação. |
 
 > **Nota:** Você pode acessar a documentação completa via Swagger em: `http://localhost:8080/swagger-ui/index.html`
-
----
-
-## Fluxo de Exe
 
 ---
 
