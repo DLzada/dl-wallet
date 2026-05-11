@@ -81,3 +81,9 @@ Você precisará ter o **Docker Desktop** instalado na sua máquina.
     ```
 
 O Spring Boot iniciará na porta `8080` e o Postgres na porta `5432`.
+
+---
+##  Autor
+Desenvolvido por **Daniel Luiz**.
+
+* [LinkedIn](https://www.linkedin.com/in/daniel-luiz1607)
