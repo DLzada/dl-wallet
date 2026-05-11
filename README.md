@@ -23,3 +23,24 @@ O projeto segue uma estrutura de **Monolito Containerizado**, dividida em camada
 * **Docker & Docker Compose**: Orquestração do ambiente de desenvolvimento.
 * **Bean Validation**: Validação rigorosa dos dados de entrada.
 * **Maven**: Gerenciamento de dependências e build.
+
+---
+
+## Endpoints da API
+
+Abaixo estão os principais pontos de acesso da aplicação:
+
+### Usuários
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| `POST` | `/usuarios` | Cadastra um novo usuário no sistema. |
+| `GET` | `/usuarios/{id}` | Busca detalhes de um usuário específico. |
+
+### Transações
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| `POST` | `/transacoes` | Registra uma nova entrada ou saída financeira. |
+| `GET` | `/transacoes/usuario/{id}` | Lista todo o histórico financeiro de um usuário. |
+| `DELETE` | `/transacoes/{id}` | Remove um registro de transação. |
+
+> **Nota:** Você pode acessar a documentação completa via Swagger em: `http://localhost:8080/swagger-ui/index.html`
