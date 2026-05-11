@@ -13,3 +13,13 @@ O projeto segue uma estrutura de **Monolito Containerizado**, dividida em camada
 3.  **Service**: Onde reside a inteligência do negócio (regras de cálculo e validações).
 4.  **Repository**: Interface de comunicação com o banco de dados via JPA/Hibernate.
 5.  **PostgreSQL**: Banco de dados relacional rodando em um container isolado.
+
+---
+
+## Tecnologias Utilizadas
+* **Java 21** & **Spring Boot 4**
+* **Spring Data JPA**: Persistência de dados eficiente.
+* **PostgreSQL**: Banco de dados robusto para produção.
+* **Docker & Docker Compose**: Orquestração do ambiente de desenvolvimento.
+* **Bean Validation**: Validação rigorosa dos dados de entrada.
+* **Maven**: Gerenciamento de dependências e build.
